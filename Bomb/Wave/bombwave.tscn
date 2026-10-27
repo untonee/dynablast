@@ -1,0 +1,159 @@
+[gd_scene format=3 uid="uid://m1ryi4j84nbh"]
+
+[ext_resource type="Script" uid="uid://k15kdooj36x3" path="res://Bomb/Wave/bombwave.gd" id="1_tl56x"]
+[ext_resource type="Texture2D" uid="uid://cld8tuu3rk7c6" path="res://Bomb/bomb.png" id="1_xasma"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dkl2l"]
+atlas = ExtResource("1_xasma")
+region = Rect2(112, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sy1ro"]
+atlas = ExtResource("1_xasma")
+region = Rect2(96, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l8nge"]
+atlas = ExtResource("1_xasma")
+region = Rect2(80, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_htt72"]
+atlas = ExtResource("1_xasma")
+region = Rect2(64, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bl3wg"]
+atlas = ExtResource("1_xasma")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0fywk"]
+atlas = ExtResource("1_xasma")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hp6pl"]
+atlas = ExtResource("1_xasma")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gvsgw"]
+atlas = ExtResource("1_xasma")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bjcm7"]
+atlas = ExtResource("1_xasma")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jq5aq"]
+atlas = ExtResource("1_xasma")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bs8jx"]
+atlas = ExtResource("1_xasma")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0cgio"]
+atlas = ExtResource("1_xasma")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tl56x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dkl2l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sy1ro")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l8nge")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_htt72")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l8nge")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sy1ro")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dkl2l")
+}],
+"loop": false,
+"name": &"epicenter",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bl3wg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0fywk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hp6pl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gvsgw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hp6pl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0fywk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bl3wg")
+}],
+"loop": false,
+"name": &"wave_end",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bjcm7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jq5aq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bs8jx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0cgio")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bs8jx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jq5aq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bjcm7")
+}],
+"loop": false,
+"name": &"wave_middle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7fogh"]
+size = Vector2(12, 12)
+
+[node name="Wave" type="RigidBody2D" unique_id=884167165]
+collision_layer = 4
+collision_mask = 137
+can_sleep = false
+freeze = true
+freeze_mode = 1
+continuous_cd = 1
+contact_monitor = true
+max_contacts_reported = 5
+script = ExtResource("1_tl56x")
+
+[node name="WaveAnim" type="AnimatedSprite2D" parent="." unique_id=1118174048]
+sprite_frames = SubResource("SpriteFrames_tl56x")
+animation = &"wave_middle"
+autoplay = "epicenter"
+
+[node name="WaveCollisionShape2D" type="CollisionShape2D" parent="." unique_id=282000868]
+shape = SubResource("RectangleShape2D_7fogh")
+debug_color = Color(0.6745098, 0.21568628, 0.08627451, 0.84705883)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="WaveAnim" to="." method="_on_wave_anim_animation_finished"]

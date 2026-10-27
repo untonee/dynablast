@@ -1,0 +1,135 @@
+[gd_scene format=3 uid="uid://ur57i3njcced"]
+
+[ext_resource type="Script" uid="uid://di5b85rbwifac" path="res://levels/level1/BrickWall/brick.gd" id="1_kdd6j"]
+[ext_resource type="Texture2D" uid="uid://uh8c1kkbyava" path="res://levels/level1/BrickWall/brickwall.png" id="1_w4iyg"]
+
+[sub_resource type="Animation" id="Animation_w4iyg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_w4iyg")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_kdd6j"]
+resource_name = "blink"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_xayu6"]
+resource_name = "new_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_h23nm"]
+resource_name = "destroy"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 4, 7]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.25),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_unr8w"]
+_data = {
+&"RESET": SubResource("Animation_w4iyg"),
+&"blink": SubResource("Animation_kdd6j"),
+&"brick": SubResource("Animation_xayu6"),
+&"destroy": SubResource("Animation_h23nm")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_23d8b"]
+size = Vector2(14, 14)
+
+[sub_resource type="LabelSettings" id="LabelSettings_kdd6j"]
+font_size = 8
+
+[node name="Brick" type="RigidBody2D" unique_id=160349271]
+collision_layer = 128
+collision_mask = 4
+freeze = true
+freeze_mode = 1
+max_contacts_reported = 1
+script = ExtResource("1_kdd6j")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1514561498]
+texture = ExtResource("1_w4iyg")
+hframes = 8
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=66573648]
+libraries/ = SubResource("AnimationLibrary_unr8w")
+autoplay = &"blink"
+speed_scale = 1.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=6031971]
+shape = SubResource("RectangleShape2D_23d8b")
+
+[node name="Label" type="Label" parent="." unique_id=101485290]
+offset_left = -6.0
+offset_top = -10.0
+offset_right = 34.0
+offset_bottom = 13.0
+text = "x, y"
+label_settings = SubResource("LabelSettings_kdd6j")
+metadata/_edit_use_anchors_ = true

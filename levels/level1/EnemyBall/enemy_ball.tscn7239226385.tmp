@@ -1,0 +1,139 @@
+[gd_scene format=3 uid="uid://dblbex7sf2rqs"]
+
+[ext_resource type="Script" uid="uid://cykueuamcbaow" path="res://levels/level1/EnemyBall/enemy_ball.gd" id="1_tt4bf"]
+[ext_resource type="Texture2D" uid="uid://cncydhspbtudw" path="res://levels/level1/EnemyBall/enemy_ball.png" id="2_su3a5"]
+
+[sub_resource type="Animation" id="Animation_0pi0p"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_m5q7x"]
+resource_name = "die"
+length = 2.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 1.25, 1.5, 1.75, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [3, 4, 5, 6, 7, 8]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2.3666666),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_oqtcj"]
+resource_name = "walk"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_73thb"]
+_data = {
+&"RESET": SubResource("Animation_0pi0p"),
+&"die": SubResource("Animation_m5q7x"),
+&"walk": SubResource("Animation_oqtcj")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0aseo"]
+size = Vector2(40, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_su3a5"]
+size = Vector2(11, 18.5)
+
+[node name="EnemyBall" type="CharacterBody2D" unique_id=341314233]
+collision_layer = 256
+collision_mask = 183
+script = ExtResource("1_tt4bf")
+idle_time = null
+speed = null
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=696240298]
+position = Vector2(0, 3)
+scale = Vector2(3, 3)
+texture = ExtResource("2_su3a5")
+hframes = 9
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=454014782]
+root_node = NodePath("../Sprite2D")
+libraries/ = SubResource("AnimationLibrary_73thb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=454107070]
+visible = false
+shape = SubResource("RectangleShape2D_0aseo")
+
+[node name="BallIdleTimer" type="Timer" parent="." unique_id=1928653067]
+wait_time = 2.0
+one_shot = true
+
+[node name="LeftArea2D" type="Area2D" parent="." unique_id=160390942]
+collision_mask = 178
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftArea2D" unique_id=2009795753]
+position = Vector2(-18.5, -3.75)
+shape = SubResource("RectangleShape2D_su3a5")
+debug_color = Color(12.342262, 10.370252, 2.4822042, 1)
+
+[node name="RightArea2D" type="Area2D" parent="." unique_id=661933650]
+collision_mask = 178
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightArea2D" unique_id=1604985000]
+position = Vector2(16, -4)
+shape = SubResource("RectangleShape2D_su3a5")
+debug_color = Color(11.567544, 10.792825, 1.4035361, 0.41960785)
+
+[node name="UpArea2D" type="Area2D" parent="." unique_id=2047604589]
+collision_mask = 178
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpArea2D" unique_id=191684787]
+position = Vector2(0, -17)
+shape = SubResource("RectangleShape2D_su3a5")
+debug_color = Color(0.6392157, 0.5254902, 0.02745098, 0.8862745)
+
+[node name="DownArea2D" type="Area2D" parent="." unique_id=845546432]
+collision_mask = 178
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DownArea2D" unique_id=666158692]
+position = Vector2(0, 18)
+shape = SubResource("RectangleShape2D_su3a5")
+debug_color = Color(0.64705884, 0.52156866, 0, 0.9137255)
+
+[connection signal="body_entered" from="LeftArea2D" to="." method="_on_left_area_2d_body_entered"]
+[connection signal="body_entered" from="RightArea2D" to="." method="_on_right_area_2d_body_entered"]
+[connection signal="body_entered" from="UpArea2D" to="." method="_on_up_area_2d_body_entered"]
+[connection signal="body_entered" from="DownArea2D" to="." method="_on_down_area_2d_body_entered"]

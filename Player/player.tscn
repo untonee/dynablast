@@ -1,0 +1,286 @@
+[gd_scene format=3 uid="uid://b2wnmjquv1aum"]
+
+[ext_resource type="Script" uid="uid://1wy10easfnl4" path="res://Player/player.gd" id="1_4ntmi"]
+[ext_resource type="Texture2D" uid="uid://cx5st1msy2qri" path="res://Player/player.png" id="2_btcbx"]
+[ext_resource type="AudioStream" uid="uid://beid2nx6ekcbu" path="res://Player/step.wav" id="3_btcbx"]
+[ext_resource type="AudioStream" uid="uid://cx5p4a36gys0x" path="res://Player/Bomberman Die FX.mp3" id="3_gwnis"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_apopc"]
+size = Vector2(12, 15)
+
+[sub_resource type="Animation" id="Animation_gwnis"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_k53q1"]
+resource_name = "die"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 15, 16, 17, 18, 19, 23]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DieAudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_gwnis")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="Animation" id="Animation_fhl08"]
+resource_name = "down"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 0, 2]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StepAudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_btcbx")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_btcbx")
+}],
+"times": PackedFloat32Array(0.26666668, 0.76666665)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="Animation" id="Animation_4ntmi"]
+resource_name = "downtime"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.9, 2.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 3, 6, 9]
+}
+
+[sub_resource type="Animation" id="Animation_btcbx"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_vtle1"]
+resource_name = "left"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 6, 8]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StepAudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_btcbx")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_btcbx")
+}],
+"times": PackedFloat32Array(0.25, 0.75)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="Animation" id="Animation_od3ui"]
+resource_name = "right"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [3, 4, 3, 5]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StepAudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_btcbx")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_btcbx")
+}],
+"times": PackedFloat32Array(0.25, 0.75)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="Animation" id="Animation_00tjw"]
+resource_name = "up"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [9, 10, 9, 11]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StepAudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_btcbx")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_btcbx")
+}],
+"times": PackedFloat32Array(0.26666668, 0.76666665)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x3vf3"]
+_data = {
+&"RESET": SubResource("Animation_gwnis"),
+&"die": SubResource("Animation_k53q1"),
+&"down": SubResource("Animation_fhl08"),
+&"downtime": SubResource("Animation_4ntmi"),
+&"idle": SubResource("Animation_btcbx"),
+&"left": SubResource("Animation_vtle1"),
+&"right": SubResource("Animation_od3ui"),
+&"up": SubResource("Animation_00tjw")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_btcbx"]
+size = Vector2(14, 16)
+
+[node name="Player" type="CharacterBody2D" unique_id=490232097]
+collision_mask = 180
+motion_mode = 1
+platform_wall_layers = 48
+script = ExtResource("1_4ntmi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1568010228]
+shape = SubResource("RectangleShape2D_apopc")
+
+[node name="PlayerSprite" type="Sprite2D" parent="." unique_id=1674894899]
+texture = ExtResource("2_btcbx")
+hframes = 13
+vframes = 2
+
+[node name="IdleTimer" type="Timer" parent="." unique_id=27664517]
+wait_time = 60.0
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1963342934]
+libraries/ = SubResource("AnimationLibrary_x3vf3")
+speed_scale = 1.5
+
+[node name="StepAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1164734368]
+
+[node name="Label" type="Label" parent="." unique_id=1939199280]
+offset_left = 13.0
+offset_top = -9.0
+offset_right = 98.0
+offset_bottom = 14.0
+scale = Vector2(-9.282497, -52.11233)
+text = "X, Y"
+
+[node name="MonitorArea2D" type="Area2D" parent="." unique_id=864956132]
+collision_mask = 260
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MonitorArea2D" unique_id=101008268]
+shape = SubResource("RectangleShape2D_btcbx")
+
+[node name="DieAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1473966120]
+volume_db = 6.0
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="body_entered" from="MonitorArea2D" to="." method="_on_monitor_area_2d_body_entered"]

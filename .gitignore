@@ -28,3 +28,4 @@ mono_crash.*.json
 # Local backups and video captures
 /arch/
 /_snapvideo/
+dynablast-dev.bundle

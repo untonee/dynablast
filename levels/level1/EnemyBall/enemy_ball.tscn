@@ -100,6 +100,7 @@ wait_time = 2.0
 one_shot = true
 
 [node name="LeftArea2D" type="Area2D" parent="." unique_id=160390942]
+monitorable = false
 collision_mask = 182
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftArea2D" unique_id=2009795753]
@@ -108,7 +109,8 @@ shape = SubResource("RectangleShape2D_su3a5")
 debug_color = Color(12.342262, 10.370252, 2.4822042, 1)
 
 [node name="RightArea2D" type="Area2D" parent="." unique_id=661933650]
-collision_mask = 41654
+monitorable = false
+collision_mask = 182
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightArea2D" unique_id=1604985000]
 position = Vector2(7, 0)
@@ -116,6 +118,7 @@ shape = SubResource("RectangleShape2D_su3a5")
 debug_color = Color(11.567544, 10.792825, 1.4035361, 0.41960785)
 
 [node name="UpArea2D" type="Area2D" parent="." unique_id=2047604589]
+monitorable = false
 collision_mask = 182
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UpArea2D" unique_id=191684787]
@@ -124,6 +127,7 @@ shape = SubResource("RectangleShape2D_su3a5")
 debug_color = Color(0.6392157, 0.5254902, 0.02745098, 0.8862745)
 
 [node name="DownArea2D" type="Area2D" parent="." unique_id=845546432]
+monitorable = false
 collision_mask = 182
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DownArea2D" unique_id=666158692]

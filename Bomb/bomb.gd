@@ -31,6 +31,7 @@ var halfx := tsx / 2
 var halfy := tsy / 2
 
 func _ready() -> void:
+	add_to_group("bomb")
 	count_down_timer.start(countdown)
 	# бросаем в 4 стороны лучи для определния препятствий:
 	# луч влево
@@ -247,3 +248,4 @@ func make_explosion() -> void:
 #endregion
 
 	audio_stream_player_2d.play()
+	queue_free() #бомба взорвалась - удаляем её (волны живут сами по себе)

@@ -22,14 +22,19 @@ enum MOVE_STATE { UP, DOWN, LEFT, RIGHT, IDLE }
 @export var pos : Vector2 
 
 var cur_move_state := MOVE_STATE.IDLE
+var dying := false # враг уже умирает (попадание волны) - не двигается и не убивает игрока
+
+## очки за уничтожение этого врага взрывом
+const SCORE_VALUE := 100
 
 func _ready() -> void:
-	ball_change_dir_timer.wait_time = idle_time
-	position = GlobalFunc.snap_to_grid(position, GlobalVar.tile_size)
-	animation_player.play("walk")
 	position = pos
+	ball_change_dir_timer.wait_time = randf_range(1.0, idle_time) # разнесём старт таймеров врагов по времени
+	animation_player.play("walk")
 
 func _physics_process(delta: float) -> void:
+	if dying:
+		return
 	ball_ai(delta)
 	move_and_slide()
 	
@@ -86,30 +91,41 @@ func think_what_todo(dir: MOVE_STATE) -> void:
 			cur_move_state = can_move.pick_random()
 			
 
+# уничтожение врага взрывной волной (вызывается из обработчиков Area2D)
+func kill_by_wave() -> void:
+	if dying:
+		return
+	dying = true
+	GlobalVar.score += SCORE_VALUE
+	velocity = Vector2.ZERO
+	cur_move_state = MOVE_STATE.IDLE
+	animation_player.play("die")
+
+
 func _on_left_area_2d_body_entered(body: Node2D) -> void:
 	if String(body.name).begins_with("Wave"):
-		animation_player.play("die")
-		cur_move_state  = MOVE_STATE.IDLE
+		kill_by_wave()
+		return
 	think_what_todo(MOVE_STATE.LEFT)
 
 func _on_right_area_2d_body_entered(body: Node2D) -> void:
 	if String(body.name).begins_with("Wave"):
-		animation_player.play("die")
-		cur_move_state  = MOVE_STATE.IDLE
+		kill_by_wave()
+		return
 	think_what_todo(MOVE_STATE.RIGHT)
-	
+
 func _on_up_area_2d_body_entered(body: Node2D) -> void:
 	if String(body.name).begins_with("Wave"):
-		animation_player.play("die")
-		cur_move_state  = MOVE_STATE.IDLE
+		kill_by_wave()
+		return
 	think_what_todo(MOVE_STATE.UP)
 
 func _on_down_area_2d_body_entered(body: Node2D) -> void:
 	if String(body.name).begins_with("Wave"):
-		animation_player.play("die")
-		cur_move_state  = MOVE_STATE.IDLE
+		kill_by_wave()
+		return
 	think_what_todo(MOVE_STATE.DOWN)
-	
+
 
 func _on_ball_idle_timer_timeout() -> void:
 	pass

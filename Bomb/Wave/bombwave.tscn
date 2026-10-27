@@ -137,7 +137,8 @@ size = Vector2(12, 12)
 
 [node name="Wave" type="RigidBody2D" unique_id=884167165]
 collision_layer = 4
-collision_mask = 137
+collision_mask = 392
+gravity_scale = 0.0
 can_sleep = false
 freeze = true
 freeze_mode = 1

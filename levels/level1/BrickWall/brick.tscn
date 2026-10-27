@@ -102,9 +102,6 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_23d8b"]
 size = Vector2(14, 14)
 
-[sub_resource type="LabelSettings" id="LabelSettings_kdd6j"]
-font_size = 8
-
 [node name="Brick" type="RigidBody2D" unique_id=160349271]
 collision_layer = 128
 collision_mask = 4
@@ -124,12 +121,3 @@ speed_scale = 1.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=6031971]
 shape = SubResource("RectangleShape2D_23d8b")
-
-[node name="Label" type="Label" parent="." unique_id=101485290]
-offset_left = -6.0
-offset_top = -10.0
-offset_right = 34.0
-offset_bottom = 13.0
-text = "x, y"
-label_settings = SubResource("LabelSettings_kdd6j")
-metadata/_edit_use_anchors_ = true

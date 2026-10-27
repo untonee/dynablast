@@ -53,7 +53,7 @@ script = ExtResource("1_u8wor")
 radius = 3
 anim_speed = 2
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=761419082 groups=["bomb"]]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_bl3wg")
 animation = &"bomb"
 autoplay = "bomb"

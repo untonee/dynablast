@@ -18,10 +18,12 @@ func _ready() -> void:
 
 
 func _on_wave_anim_animation_finished() -> void:
-	get_parent().queue_free()	
+	queue_free()
 
 
 func _on_body_entered(body: Node) -> void:
-	var o = str(body.name).find("Brick")
-	if o != -1:
-		body.animation_player.play("destroy")
+	# уничтожение кирпичей и врагов взрывной волной
+	if body.has_method("destroy"):
+		body.destroy()
+	if body.has_method("kill_by_wave"):
+		body.kill_by_wave()

@@ -66,12 +66,22 @@ func make_explosion() -> void:
 	collision_shape_2d.disabled = true #отключаем столкновение бомбы, чобы луч не задетектил его
 	count_down_timer.stop()
 
-	# ВАЖНО: волны добавляем НЕ в саму бомбу, а в уровень (родитель бомбы).
-	# Иначе queue_free() бомбы удалит из дерева и всех её детей: волны исчезнут
-	# вместе с ней, body_entered не сработает и взрыв будет "без эффекта".
-	var wave_parent := get_parent()
+	# ВАЖНО: волны добавляем НЕ в саму бомбу и НЕ в игрока (бомба - child игрока),
+	# а в отдельный контейнер уровня "Waves". Причины:
+	# 1) queue_free() бомбы удаляет из дерева и всех её детей - волны пропадали в том же кадре;
+	# 2) RigidBody2D нельзя добавлять в разных родителей-физических тел без reparent -
+	#    Godot выдаёт ошибку и узел не появляется на сцене.
+	# Контейнер создаём лениво на верхнем Node2D иерархии (уровень Level1).
+	var wave_parent: Node2D = get_tree().get_first_node_in_group("wave_container")
 	if wave_parent == null:
-		wave_parent = self
+		var root_node: Node2D = self
+		while root_node.get_parent() is Node2D:
+			root_node = root_node.get_parent()
+		var container := Node2D.new()
+		container.name = "Waves"
+		container.add_to_group("wave_container")
+		root_node.add_child(container)
+		wave_parent = container
 	
 	# описание работы алгоритма отрисовки волны взрыва. Исходим из условия:  размер тайла равен 48*48
 	# луч выпускается из середины клетки тайла

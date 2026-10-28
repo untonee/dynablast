@@ -105,9 +105,15 @@ func place_bomb() -> void:
 
 	var bomb := BOMB.instantiate() as BombComponent
 	bomb.radius = GlobalVar.bomb_radius
+	# ВАЖНО: добавляем бомбу в уровень (root), а НЕ child-ом игрока.
+	# Иначе при queue_free() игрока (смерть/переход между уровнями) Godot удалит из
+	# дерева и все его дочерние бомбы - взрыв "пропадал без волны". set_as_top_level
+	# здесь не спасает: узел всё равно остаётся ребёнком игрока в дереве сцены.
+	var level_root: Node = self
+	while level_root.get_parent() is Node2D:
+		level_root = level_root.get_parent()
+	level_root.add_child(bomb)
 	bomb.global_position = GlobalFunc.snap_to_grid(global_position, GlobalVar.tile_size)
-	bomb.set_as_top_level(true)
-	add_child(bomb, true)
 
 # возвращает строку анимации в соостветствии с PlayerStates и MovingStates
 func get_new_animation():

@@ -92,8 +92,8 @@ func generate_bricks_enemies(num: int, size: Vector2, enemies := 3) -> void:
 		b = ENEMY_BALL.instantiate()
 		b.pos = Vector2(nx * GlobalVar.tile_size.x + GlobalVar.tile_size.x / 2, ny * GlobalVar.tile_size.y + GlobalVar.tile_size.y / 2)
 		bricks_arr.push_front(b.pos)
-		# подписываемся на смерть врага (wave kill_by_wave -> анимация die -> queue_free)
-		b.animation_player.animation_finished.connect(_on_enemy_anim_finished.bind(b))
+		# подписываемся на полное удаление врага из дерева (kill_by_wave -> анимация die -> queue_free)
+		b.tree_exited.connect(_on_enemy_died)
 		add_child(b, true)
 		enemies_left += 1
 
@@ -123,12 +123,11 @@ func _on_player_death_finished() -> void:
 	else:
 		player.respawn()
 
-## враг умер (доиграл анимацию die) - проверяем условие победы
-func _on_enemy_anim_finished(anim_name: StringName, enemy: Node) -> void:
-	if anim_name == &"die":
-		enemies_left -= 1
-		if enemies_left <= 0 and not _game_over:
-			# победа: бонус за оставшиеся жизни
-			GlobalVar.score += GlobalVar.lives * 500
-			get_tree().call_group("hud", "show_message", "LEVEL CLEAR!")
-			get_tree().create_timer(2.0).timeout.connect(game_over)
+## враг полностью удалён из дерева (после анимации die) - проверяем условие победы
+func _on_enemy_died() -> void:
+	enemies_left -= 1
+	if enemies_left <= 0 and not _game_over:
+		# победа: бонус за оставшиеся жизни
+		GlobalVar.score += GlobalVar.lives * 500
+		get_tree().call_group("hud", "show_message", "LEVEL CLEAR!")
+		get_tree().create_timer(2.0).timeout.connect(game_over)

@@ -100,6 +100,10 @@ func kill_by_wave() -> void:
 	velocity = Vector2.ZERO
 	cur_move_state = MOVE_STATE.IDLE
 	animation_player.play("die")
+	# после проигрывания анимации смерти удаляем врага из дерева;
+	# сигнал tree_exited уровень использует для проверки условия победы
+	var timer := get_tree().create_timer(animation_player.current_animation_length)
+	timer.timeout.connect(queue_free)
 
 
 func _on_left_area_2d_body_entered(body: Node2D) -> void:

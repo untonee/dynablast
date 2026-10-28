@@ -65,6 +65,13 @@ func make_explosion() -> void:
 	animated_sprite_2d.hide() #прячем бомбу, т.к. вместо нее будет рисовать эпицентр взрыва
 	collision_shape_2d.disabled = true #отключаем столкновение бомбы, чобы луч не задетектил его
 	count_down_timer.stop()
+
+	# ВАЖНО: волны добавляем НЕ в саму бомбу, а в уровень (родитель бомбы).
+	# Иначе queue_free() бомбы удалит из дерева и всех её детей: волны исчезнут
+	# вместе с ней, body_entered не сработает и взрыв будет "без эффекта".
+	var wave_parent := get_parent()
+	if wave_parent == null:
+		wave_parent = self
 	
 	# описание работы алгоритма отрисовки волны взрыва. Исходим из условия:  размер тайла равен 48*48
 	# луч выпускается из середины клетки тайла
@@ -83,7 +90,7 @@ func make_explosion() -> void:
 	b.name += "epicenter" 
 	b.animation_name = "epicenter" 	
 	b.anim_speed = anim_speed #скорость анимации
-	add_child(b, true)
+	wave_parent.add_child(b, true)
 
 	#
 	# рисуем ВЛЕВО волну взрыва
@@ -111,7 +118,7 @@ func make_explosion() -> void:
 		b.animation_name = "wave_end" 
 		b.fliph = true
 		b.anim_speed = anim_speed #скорость анимации
-		add_child(b, true)
+		wave_parent.add_child(b, true)
 		
 		# отрисуем по необходимости отстаток взрывной волны
 		if cells_int.x >= 2:
@@ -122,7 +129,7 @@ func make_explosion() -> void:
 				b.animation_name = "wave_middle"
 				b.fliph = true
 				b.anim_speed = anim_speed
-				add_child(b, true)
+				wave_parent.add_child(b, true)
 #endregion
 
 	#
@@ -151,7 +158,7 @@ func make_explosion() -> void:
 		b.animation_name = "wave_end" 
 		b.fliph = false
 		b.anim_speed = anim_speed #скорость анимации
-		add_child(b, true)
+		wave_parent.add_child(b, true)
 		
 		# отрисуем по необходимости отстаток взрывной волны
 		if cells_int.x >= 2:
@@ -162,7 +169,7 @@ func make_explosion() -> void:
 				b.animation_name = "wave_middle"
 				b.fliph = false
 				b.anim_speed = anim_speed
-				add_child(b, true)
+				wave_parent.add_child(b, true)
 #endregion
 	
 	#
@@ -192,7 +199,7 @@ func make_explosion() -> void:
 		b.animation_name = "wave_end" 
 		b.rot = 90
 		b.anim_speed = anim_speed #скорость анимации
-		add_child(b, true)
+		wave_parent.add_child(b, true)
 		
 		# отрисуем по необходимости отстаток взрывной волны
 		if cells_int.y >= 2:
@@ -203,7 +210,7 @@ func make_explosion() -> void:
 				b.animation_name = "wave_middle"
 				b.rot = 90
 				b.anim_speed = anim_speed
-				add_child(b, true)
+				wave_parent.add_child(b, true)
 #endregion
 
 	#
@@ -233,7 +240,7 @@ func make_explosion() -> void:
 		b.animation_name = "wave_end" 
 		b.rot = -90
 		b.anim_speed = anim_speed #скорость анимации
-		add_child(b, true)
+		wave_parent.add_child(b, true)
 		
 		# отрисуем по необходимости отстаток взрывной волны
 		if cells_int.y >= 2:
@@ -244,7 +251,7 @@ func make_explosion() -> void:
 				b.animation_name = "wave_middle"
 				b.rot = -90
 				b.anim_speed = anim_speed
-				add_child(b, true)
+				wave_parent.add_child(b, true)
 #endregion
 
 	audio_stream_player_2d.play()
